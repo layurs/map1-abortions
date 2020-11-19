@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="leaflet/leaflet.css">
+    <style>
+        #mapid { height: 100vh; }
+    </style>
+</head>
+
+<body>
+    <div id="mapid"></div>
+    <script src="leaflet/leaflet.js"></script>
+    <script src="js/d3.v5.min.js"></script>
+    <script type="text/javascript">
+
+
+
+    //starting position of the map
+    var mymap = L.map('mapid').setView([19.445681, -99.111758], 11);
+        
+// var Stamen_TopOSMFeatures = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toposm-features/{z}/{x}/{y}{r}.{ext}', {
+//	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//	subdomains: 'abcd',
+//	minZoom: 0,
+//	maxZoom: 20,
+//	ext: 'png',
+//	bounds: [[22, -132], [51, -56]],
+//	opacity: 0.9
+//});
+//        
+//            var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+//        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+//        subdomains: 'abcd',
+//        maxZoom: 19
+//    }).addTo(mymap);
+        
+    var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+	maxZoom: 20,
+	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+}).addTo(mymap);    
+        
+    
+        
+
+    d3.csv("hospitals.csv").then(function(data){
+
+
+        data.forEach(function(d){
+
+            L.marker([+d["lat"],+d["long"]]) //{icon: L.icon({iconUrl: "" })}
+                .bindPopup("<h2>" + d["Hospital "] + "</h2><p>Total abortions since 2007:  " + d["Abortions 2007-2020"] + "</p>")
+                .addTo(mymap);
+
+        });
+
+
+    });
+
+
+    </script>
+</body>
+
+</html>
